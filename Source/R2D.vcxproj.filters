@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>{46da6219-f6bf-4d8d-8acd-a0c6208dfe1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{a1126aa0-4729-4cc1-adbd-a8ba708934ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{8aa3a4a9-e8cc-4f7e-9a7d-c21025bfdb16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper">
+      <UniqueIdentifier>{c0930562-1224-45ea-baf9-5ccc7ec980c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper\Application">
+      <UniqueIdentifier>{cd1f680a-0bdc-458d-996e-7ec068cdf42d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Types">
+      <UniqueIdentifier>{024eae0a-d666-4c29-8b0a-32de744dd0bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{d92bc7e8-2278-4701-a4ac-570d7e44345d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{ae755a5a-b5eb-4bb2-952e-ba5a0d09bda4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Windows">
+      <UniqueIdentifier>{9a1375d9-dee7-4d8e-a30d-02384bb9011f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Window">
+      <UniqueIdentifier>{3cbf8d69-1ba9-46ef-ac71-7380ac648091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Manager">
+      <UniqueIdentifier>{f8bfc7e4-03b0-4ff9-bc5f-4e228b90f5ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Memory">
+      <UniqueIdentifier>{d5e9d755-f60a-450d-99c1-30bd8ee443af}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="R2D.hpp" />
+    <ClInclude Include="Common.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.hpp">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper\Application.hpp">
+      <Filter>Helper\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Types.hpp">
+      <Filter>Common\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.hpp">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.hpp">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Windows.hpp">
+      <Filter>Common\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Manager.hpp">
+      <Filter>Graphics\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Window.hpp">
+      <Filter>Graphics\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Memory.hpp">
+      <Filter>Common\Memory</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Common.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Manager.cpp">
+      <Filter>Graphics\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Window.cpp">
+      <Filter>Graphics\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Memory.cpp">
+      <Filter>Common\Memory</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
