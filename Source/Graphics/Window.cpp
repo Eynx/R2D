@@ -7,7 +7,9 @@
 // Includes
 #include "..\Graphics\Window.hpp"
 // -- //
-#include "..\Common\Windows.hpp"
+#include "..\Graphics\Manager.hpp"
+// -- //
+#include "..\Graphics\D3D12.hpp"
 
 // --------------------------------------------------------------------------------------------
 namespace R2D
@@ -51,6 +53,66 @@ namespace R2D
             Assert(Handle != INVALID_HANDLE_VALUE, "There was a problem creating the window.");
         }
 
+        // Create and initialize the swap-chain.
+        {
+            // Retreive the graphics manager.
+            auto graphics = Graphics::Manager::Singleton;
+
+            // Initialize the swap-chain.
+            {
+                // Retrieve the factory.
+                auto factory = graphics->D3D.Factory;
+
+                DXGI_SWAP_CHAIN_DESC1 swapChainDesc;
+                // Describe the swap-chain.
+                swapChainDesc.Width = description.Width;
+                swapChainDesc.Height = description.Height;
+                swapChainDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+                swapChainDesc.Stereo = FALSE;
+                swapChainDesc.SampleDesc.Count = 1;
+                swapChainDesc.SampleDesc.Quality = 0;
+                swapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;
+                swapChainDesc.BufferCount = 2;
+                swapChainDesc.Scaling = DXGI_SCALING_NONE;
+                swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+                swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_IGNORE;
+                swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING;
+                // Create the swap-chain.
+                HRESULT result = factory->CreateSwapChainForHwnd(graphics->D3D.Queue, (HWND)Handle, &swapChainDesc, nullptr, nullptr, (IDXGISwapChain1**)&D3D.SwapChain);
+                // Debug check
+                Assert(SUCCEEDED(result), "There was a problem creating the swap-chain.");
+
+                // Disable fullscreen transitions.
+                result = factory->MakeWindowAssociation((HWND)Handle, DXGI_MWA_NO_ALT_ENTER);
+                // Debug check
+                Warning(SUCCEEDED(result), "There was a problem disabling fullscreen transitions.");
+
+                UINT support;
+                // Retrieve the colour profile.
+                result = D3D.SwapChain->CheckColorSpaceSupport(DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709, &support);
+
+                // Set the colour profile.
+                result = D3D.SwapChain->SetColorSpace1(DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709);
+                // Note: DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709 is the only supported colour profile for 16-bit swap-chains.
+
+                // Debug check
+                Assert(SUCCEEDED(result), "There was a problem setting the colour profile.");
+            }
+
+            // Initialize the swap-chain render targets.
+            for(Int i = 0; i < 2; i++)
+            {
+                // Retrieve a pointer to the backbuffer.
+                HRESULT result = D3D.SwapChain->GetBuffer(i, IID_PPV_ARGS(&D3D.RenderTargets[i]));
+                // Debug check
+                Assert(SUCCEEDED(result), "There was a problem retrieving the handle to the swap-chain backbuffers.");
+            }
+        }
+
+        // Store the window size.
+        Width = description.Width;
+        Height = description.Height;
+
         auto handle = (HWND)Handle;
         // Finally, setting the window visibility last ensures that the user doesn't see the temporary stages the window goes through during creation (looks like flickering/lag).
         ShowWindow(handle, SW_SHOW);
@@ -61,6 +123,12 @@ namespace R2D
     // ----------------------------------------------------------------------------------------
     Void Graphics::Window::Release()
     {
+        // Release the render targets.
+        if(D3D.RenderTargets[0]) { D3D.RenderTargets[0]->Release(); D3D.RenderTargets[0] = nullptr; }
+        if(D3D.RenderTargets[1]) { D3D.RenderTargets[1]->Release(); D3D.RenderTargets[1] = nullptr; }
+        // Release the swap chain.
+        if(D3D.SwapChain) { D3D.SwapChain->Release(); D3D.SwapChain = nullptr; }
+
         // Destroy the window if one exists.
         if(Handle) { DestroyWindow((HWND)Handle); Handle = nullptr; }
     };

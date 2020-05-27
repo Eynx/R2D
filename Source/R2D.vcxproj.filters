@@ -37,6 +37,12 @@
     <Filter Include="Common\Memory">
       <UniqueIdentifier>{d5e9d755-f60a-450d-99c1-30bd8ee443af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\D3D12">
+      <UniqueIdentifier>{0d46a6dc-efc6-43fc-804d-0b1d80bce143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Time">
+      <UniqueIdentifier>{d052c0a5-172b-41cf-be8b-04f1ac654e69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="R2D.hpp" />
@@ -73,6 +79,12 @@
     <ClInclude Include="Common\Memory.hpp">
       <Filter>Common\Memory</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\D3D12.hpp">
+      <Filter>Graphics\D3D12</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Time.hpp">
+      <Filter>Common\Time</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common.cpp">
@@ -86,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="Common\Memory.cpp">
       <Filter>Common\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Time.cpp">
+      <Filter>Common\Time</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

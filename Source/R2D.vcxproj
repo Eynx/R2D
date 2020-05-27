@@ -109,9 +109,11 @@ exit 0</Command>
   <ItemGroup>
     <ClInclude Include="Common.hpp" />
     <ClInclude Include="Common\Memory.hpp" />
+    <ClInclude Include="Common\Time.hpp" />
     <ClInclude Include="Common\Types.hpp" />
     <ClInclude Include="Common\Windows.hpp" />
     <ClInclude Include="Graphics.hpp" />
+    <ClInclude Include="Graphics\D3D12.hpp" />
     <ClInclude Include="Graphics\Manager.hpp" />
     <ClInclude Include="Graphics\Window.hpp" />
     <ClInclude Include="Helper\Application.hpp" />
@@ -126,6 +128,7 @@ exit 0</Command>
   <ItemGroup>
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="Common\Memory.cpp" />
+    <ClCompile Include="Common\Time.cpp" />
     <ClCompile Include="Graphics\Manager.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
   </ItemGroup>

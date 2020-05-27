@@ -30,7 +30,17 @@ namespace R2D
 
     // Helper function; Shorthand for casting an lvalue to an xvalue.
     template <typename Type> inline Type&& Move(Type& object) { return static_cast<Type&&>(object); };
+
+    // TODO: Temporary namespace containing common debugging utilties?
+    namespace Debug
+    {
+        // Print text to debugger console.
+        extern Void Print(const wchar_t* pOutputString);
+    }
 }
 
 // Debug-Mode utility that triggers a breakpoint if the asserted expression is false.
 #define Assert(expression, message) if(!(expression)) { __debugbreak(); }
+
+// Debug-Mode utlity that displays the contained message if the expression is false. Use only if the program state is still valid.
+#define Warning(expression, message) if(!(expression)) { R2D::Debug::Print(L##"WARNING: "##message"\n"); }

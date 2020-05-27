@@ -7,6 +7,7 @@
 // Includes
 #include "Common.hpp"
 #include "Common\Memory.hpp"
+#include "Common\Time.hpp"
 // -- //
 #include "Graphics.hpp"
 #include "Graphics\Manager.hpp"
@@ -22,6 +23,9 @@ namespace R2D
     // ----------------------------------------------------------------------------------------
     Void Initialize()
     {
+        // Allocate the time manager.
+        Time::Manager::Singleton = Memory::Request<Time::Manager>();
+
         // Allocate the graphics manager.
         Graphics::Manager::Singleton = Memory::Request<Graphics::Manager>();
 
@@ -104,6 +108,14 @@ namespace R2D
             Graphics::Manager::Singleton = nullptr;
         }
 
+        // Release the time manager.
+        if(Time::Manager::Singleton)
+        {
+            //Time::Manager::Singleton->Release();
+            Memory::Free(Time::Manager::Singleton);
+            Time::Manager::Singleton = nullptr;
+        }
+
         // Unregister the application class.
         UnregisterClassW(L"R3D", GetModuleHandleW(nullptr));
     };
@@ -115,7 +127,7 @@ namespace R2D
         ::Sleep(milliseconds);
     };
 
-    // ------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------
     LRESULT CALLBACK Procedure(HWND hwnd, UINT umessage, WPARAM wparam, LPARAM lparam)
     {
         // Parse the message or send it off to the default procedure to handle it.
@@ -136,4 +148,15 @@ namespace R2D
             }
         }
     };
+
+    // ----------------------------------------------------------------------------------------
+    namespace Debug
+    {
+        // ------------------------------------------------------------------------------------
+        Void Print(const wchar_t* pOutputString)
+        {
+            // Print the text to Visual Studio's console.
+            OutputDebugStringW(pOutputString);
+        };
+    }
 }

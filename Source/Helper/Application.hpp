@@ -8,6 +8,7 @@
 #pragma once
 // Includes
 #include "..\Common.hpp"
+#include "..\Common\Time.hpp"
 // -- //
 #include "..\Graphics.hpp"
 #include "..\Graphics\Manager.hpp"
@@ -44,6 +45,9 @@ namespace R2D
             // Initialize the R2D framework.
             R2D::Initialize();
 
+            // Initialize the time manager.
+            //Time::Manager::Singleton->Initialize();
+
             // Initialize the graphics manager.
             Graphics::Manager::Singleton->Initialize();
 
@@ -54,6 +58,10 @@ namespace R2D
         // Begin main application loop.
         Void Run()
         {
+            // Helpers
+            auto time = Time::Manager::Singleton;
+            auto graphics = Graphics::Manager::Singleton;
+
             // Prepare the infinite loop.
             Bool running = true;
 
@@ -63,11 +71,16 @@ namespace R2D
                 // Prepare the frame.
                 running = R2D::Update();
 
-                // Call the user update function.
+                // Update procedure.
+                graphics->Begin();
                 User.Update();
 
-                // Call the user draw function.
+                // Render procedure.
                 User.Draw();
+                graphics->Present();
+
+                // Move to the next frame.
+                time->Frame++;
 
                 // Sleep for now, to keep the CPU utilization down.
                 R2D::Sleep(16);
