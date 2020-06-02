@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -108,12 +108,15 @@ exit 0</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Common.hpp" />
+    <ClInclude Include="Common\Hash.hpp" />
     <ClInclude Include="Common\Memory.hpp" />
+    <ClInclude Include="Common\Set.hpp" />
     <ClInclude Include="Common\Time.hpp" />
     <ClInclude Include="Common\Types.hpp" />
     <ClInclude Include="Common\Windows.hpp" />
     <ClInclude Include="Graphics.hpp" />
     <ClInclude Include="Graphics\D3D12.hpp" />
+    <ClInclude Include="Graphics\Heap.hpp" />
     <ClInclude Include="Graphics\Manager.hpp" />
     <ClInclude Include="Graphics\Window.hpp" />
     <ClInclude Include="Helper\Application.hpp" />
@@ -128,7 +131,9 @@ exit 0</Command>
   <ItemGroup>
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="Common\Memory.cpp" />
+    <ClCompile Include="Common\Set.cpp" />
     <ClCompile Include="Common\Time.cpp" />
+    <ClCompile Include="Graphics\Heap.cpp" />
     <ClCompile Include="Graphics\Manager.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
   </ItemGroup>

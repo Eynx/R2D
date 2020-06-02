@@ -36,6 +36,20 @@ namespace R2D
     {
         // Print text to debugger console.
         extern Void Print(const wchar_t* pOutputString);
+
+        // Helper function for retrieving the number of elements in a static array.
+        template <typename Type, size_t size> inline constexpr size_t Count(const Type(&type)[size]) { return size; };
+
+        // Helper struct for determining the underlying type of an enum (preferably) or object as an integer.
+        template <typename Type> struct Underlying
+        {
+            template <size_t size> struct Size { typedef Void Type; };
+            template <> struct Size<1> { typedef Byte Type; };
+            template <> struct Size<2> { typedef Short Type; };
+            template <> struct Size<4> { typedef Int Type; };
+            template <> struct Size<8> { typedef Long Type; };
+            typedef typename Size<sizeof(Type)>::Type Type;
+        };
     }
 }
 
@@ -44,3 +58,9 @@ namespace R2D
 
 // Debug-Mode utlity that displays the contained message if the expression is false. Use only if the program state is still valid.
 #define Warning(expression, message) if(!(expression)) { R2D::Debug::Print(L##"WARNING: "##message"\n"); }
+
+// Imported from winnt.h
+#ifndef DEFINE_ENUM_OPERATORS
+#define DEFINE_ENUM_OPERATORS(ENUM) \
+inline constexpr ENUM operator | (ENUM lhs, ENUM rhs) { return ENUM((R2D::Debug::Underlying<ENUM>::Type)lhs | (R2D::Debug::Underlying<ENUM>::Type)rhs); };
+#endif // DEFINE_ENUM_OPERATORS

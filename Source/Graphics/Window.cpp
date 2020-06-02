@@ -106,6 +106,18 @@ namespace R2D
                 HRESULT result = D3D.SwapChain->GetBuffer(i, IID_PPV_ARGS(&D3D.RenderTargets[i]));
                 // Debug check
                 Assert(SUCCEEDED(result), "There was a problem retrieving the handle to the swap-chain backbuffers.");
+
+                D3D12_RENDER_TARGET_VIEW_DESC rtvDesc;
+                // Create an RTV for the render target.
+                rtvDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+                rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
+                rtvDesc.Texture2D.MipSlice = 0;
+                rtvDesc.Texture2D.PlaneSlice = 0;
+                // -- //
+                Graphics::Descriptor descriptor = graphics->Heap.RTVs.Request();
+                D3D.RTVs[i] = descriptor.Index;
+                // -- //
+                graphics->D3D.Device->CreateRenderTargetView(D3D.RenderTargets[i], &rtvDesc, descriptor);
             }
         }
 

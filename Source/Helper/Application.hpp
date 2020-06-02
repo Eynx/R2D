@@ -76,6 +76,7 @@ namespace R2D
                 User.Update();
 
                 // Render procedure.
+                graphics->Upload();
                 User.Draw();
                 graphics->Present();
 

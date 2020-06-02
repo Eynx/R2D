@@ -43,6 +43,15 @@
     <Filter Include="Common\Time">
       <UniqueIdentifier>{d052c0a5-172b-41cf-be8b-04f1ac654e69}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Heap">
+      <UniqueIdentifier>{dcff61bf-2a7e-43e6-9560-f62406c641b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Set">
+      <UniqueIdentifier>{b430b1d3-540d-4a97-b38c-69e3590dacaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Hash">
+      <UniqueIdentifier>{40967ea1-64e9-46f7-852a-7999110bd6c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="R2D.hpp" />
@@ -85,6 +94,15 @@
     <ClInclude Include="Common\Time.hpp">
       <Filter>Common\Time</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\Heap.hpp">
+      <Filter>Graphics\Heap</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Set.hpp">
+      <Filter>Common\Set</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Hash.hpp">
+      <Filter>Common\Hash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common.cpp">
@@ -101,6 +119,12 @@
     </ClCompile>
     <ClCompile Include="Common\Time.cpp">
       <Filter>Common\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Heap.cpp">
+      <Filter>Graphics\Heap</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Set.cpp">
+      <Filter>Common\Set</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -44,6 +44,7 @@ namespace R2D
             {
                 IDXGISwapChain3* SwapChain = nullptr;
                 ID3D12Resource* RenderTargets[2] = { nullptr, nullptr };
+                Int RTVs[2] = { -1, -1 };
             } D3D;
             // [HWND] Abstraction; The Win32 handle to the application window.
             Void* Handle;
@@ -66,7 +67,7 @@ namespace R2D
             // Constructors
 
             // Default constructor.
-            Window() : D3D(), Handle(nullptr), Width(0), Height(0) {};
+            Window() : D3D(), Handle(nullptr), Size(0) {};
             // Copy constructor.
             Window(const Window& other) = delete;
             // Move constructor.
