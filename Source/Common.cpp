@@ -6,6 +6,7 @@
 
 // Includes
 #include "Common.hpp"
+#include "Common\Directory.hpp"
 #include "Common\Memory.hpp"
 #include "Common\Time.hpp"
 // -- //
@@ -48,6 +49,18 @@ namespace R2D
 
             // Register the window class.
             RegisterClassExW(&wc);
+        }
+
+        // Initialize the working directory.
+        {
+            // Temporary buffer to hold the string data.
+            wchar_t pathBuffer[MAX_PATH];
+
+            // Load the directory.
+            GetCurrentDirectoryW(MAX_PATH, pathBuffer);
+
+            // Translate from UTF-16 to UTF-8.
+            Directory::Working = Memory::Request<String>(narrow(std::wstring(pathBuffer)));
         }
     };
 

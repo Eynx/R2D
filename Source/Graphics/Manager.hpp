@@ -16,6 +16,7 @@
 // Forward declarations.
 struct ID3D12Device1;
 struct IDXGIFactory4;
+struct ID3D12RootSignature;
 // -- //
 struct ID3D12CommandQueue;
 struct ID3D12GraphicsCommandList;
@@ -40,6 +41,7 @@ namespace R2D
             {
                 ID3D12Device1* Device = nullptr;
                 IDXGIFactory4* Factory = nullptr;
+                ID3D12RootSignature* Root = nullptr;
                 // -- //
                 ID3D12CommandQueue* Queue = nullptr;
                 ID3D12GraphicsCommandList* Commands = nullptr;

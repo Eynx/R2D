@@ -108,9 +108,13 @@ exit 0</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Common.hpp" />
+    <ClInclude Include="Common\Directory.hpp" />
+    <ClInclude Include="Common\File.hpp" />
     <ClInclude Include="Common\Hash.hpp" />
     <ClInclude Include="Common\Memory.hpp" />
+    <ClInclude Include="Common\Memory\Buffer.hpp" />
     <ClInclude Include="Common\Set.hpp" />
+    <ClInclude Include="Common\String.hpp" />
     <ClInclude Include="Common\Time.hpp" />
     <ClInclude Include="Common\Types.hpp" />
     <ClInclude Include="Common\Windows.hpp" />
@@ -118,6 +122,7 @@ exit 0</Command>
     <ClInclude Include="Graphics\D3D12.hpp" />
     <ClInclude Include="Graphics\Heap.hpp" />
     <ClInclude Include="Graphics\Manager.hpp" />
+    <ClInclude Include="Graphics\State.hpp" />
     <ClInclude Include="Graphics\Window.hpp" />
     <ClInclude Include="Helper\Application.hpp" />
     <ClInclude Include="Input.hpp" />
@@ -130,11 +135,15 @@ exit 0</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common.cpp" />
+    <ClCompile Include="Common\Directory.cpp" />
+    <ClCompile Include="Common\File.cpp" />
     <ClCompile Include="Common\Memory.cpp" />
+    <ClCompile Include="Common\Memory\Buffer.cpp" />
     <ClCompile Include="Common\Set.cpp" />
     <ClCompile Include="Common\Time.cpp" />
     <ClCompile Include="Graphics\Heap.cpp" />
     <ClCompile Include="Graphics\Manager.cpp" />
+    <ClCompile Include="Graphics\State.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

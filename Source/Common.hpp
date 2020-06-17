@@ -56,11 +56,12 @@ namespace R2D
 // Debug-Mode utility that triggers a breakpoint if the asserted expression is false.
 #define Assert(expression, message) if(!(expression)) { __debugbreak(); }
 
-// Debug-Mode utlity that displays the contained message if the expression is false. Use only if the program state is still valid.
+// Debug-Mode utlity that displays the contained message if the expression is false. Use only if the program state is still valid if the condition triggers.
 #define Warning(expression, message) if(!(expression)) { R2D::Debug::Print(L##"WARNING: "##message"\n"); }
 
 // Imported from winnt.h
 #ifndef DEFINE_ENUM_OPERATORS
 #define DEFINE_ENUM_OPERATORS(ENUM) \
-inline constexpr ENUM operator | (ENUM lhs, ENUM rhs) { return ENUM((R2D::Debug::Underlying<ENUM>::Type)lhs | (R2D::Debug::Underlying<ENUM>::Type)rhs); };
+inline constexpr ENUM operator | (ENUM lhs, ENUM rhs) { return ENUM((R2D::Debug::Underlying<ENUM>::Type)lhs | (R2D::Debug::Underlying<ENUM>::Type)rhs); }; \
+inline constexpr ENUM operator & (ENUM lhs, ENUM rhs) { return ENUM((R2D::Debug::Underlying<ENUM>::Type)lhs & (R2D::Debug::Underlying<ENUM>::Type)rhs); };
 #endif // DEFINE_ENUM_OPERATORS

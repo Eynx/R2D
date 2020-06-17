@@ -52,6 +52,21 @@
     <Filter Include="Common\Hash">
       <UniqueIdentifier>{40967ea1-64e9-46f7-852a-7999110bd6c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\State">
+      <UniqueIdentifier>{c98976cf-e411-4c60-916f-587e2d1aefdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\File">
+      <UniqueIdentifier>{0769d02c-89e5-4cc3-8a44-77faa8ce1eed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Directory">
+      <UniqueIdentifier>{8f585d52-3ebc-48b5-ae38-22002780fbb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\String">
+      <UniqueIdentifier>{b950570c-9c11-4929-822b-37cda6bc365d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Memory\Buffer">
+      <UniqueIdentifier>{c4e1b524-8c02-4081-8405-b1ccfc27aac3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="R2D.hpp" />
@@ -103,6 +118,21 @@
     <ClInclude Include="Common\Hash.hpp">
       <Filter>Common\Hash</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\State.hpp">
+      <Filter>Graphics\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Directory.hpp">
+      <Filter>Common\Directory</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\File.hpp">
+      <Filter>Common\File</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\String.hpp">
+      <Filter>Common\String</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Memory\Buffer.hpp">
+      <Filter>Common\Memory\Buffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common.cpp">
@@ -125,6 +155,18 @@
     </ClCompile>
     <ClCompile Include="Common\Set.cpp">
       <Filter>Common\Set</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\State.cpp">
+      <Filter>Graphics\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Directory.cpp">
+      <Filter>Common\Directory</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\File.cpp">
+      <Filter>Common\File</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Memory\Buffer.cpp">
+      <Filter>Common\Memory\Buffer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

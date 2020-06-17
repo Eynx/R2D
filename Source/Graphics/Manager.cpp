@@ -92,6 +92,44 @@ namespace R2D
             Heap.RTVs.Handle = &Heaps[0];
         }
 
+        // Initialize the root signature.
+        {
+            // Prepare to describe the root signature.
+            D3D12_ROOT_PARAMETER1 parameters[1];
+
+            // Describe the root constants.
+            parameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
+            parameters[0].Constants.ShaderRegister = 0; // b0
+            parameters[0].Constants.RegisterSpace = 1; // space1
+            parameters[0].Constants.Num32BitValues = 4;
+            parameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+
+            // Deny uneccessary access to certain pipeline stages. The Input-Assembler's Input-Layout also isn't enabled here as it's not needed or used.
+            D3D12_ROOT_SIGNATURE_FLAGS flags = D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS | D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS | D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS;
+
+            D3D12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc;
+            // Describe the root signature.
+            rootSignatureDesc.Version = D3D_ROOT_SIGNATURE_VERSION_1_1;
+            rootSignatureDesc.Desc_1_1.NumParameters = _countof(parameters);
+            rootSignatureDesc.Desc_1_1.pParameters = parameters;
+            rootSignatureDesc.Desc_1_1.NumStaticSamplers = 0; //_countof(samplers);
+            rootSignatureDesc.Desc_1_1.pStaticSamplers = nullptr; //samplers;
+            rootSignatureDesc.Desc_1_1.Flags = flags;
+
+            // Prepare the blobs.
+            ID3DBlob* signature = nullptr; ID3DBlob* error = nullptr;
+
+            // Compile the root signature.
+            HRESULT result = D3D12SerializeVersionedRootSignature(&rootSignatureDesc, &signature, &error);
+            // Debug check
+            Assert(SUCCEEDED(result), "There was a problem serializing the root signature.");
+
+            // Create the root signature.
+            result = D3D.Device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&D3D.Root));
+            // Debug check
+            Assert(SUCCEEDED(result), "There was a problem creating the root signature.");
+        }
+
         // Initialize the scheduler resources.
         {
             D3D12_COMMAND_QUEUE_DESC queueDesc;
@@ -163,6 +201,8 @@ namespace R2D
 
         // Release the command queue.
         if(D3D.Queue) { D3D.Queue->Release(); D3D.Queue = nullptr; }
+        // Release the root signature.
+        if(D3D.Root) { D3D.Root->Release(); D3D.Root = nullptr; }
         // Release the device.
         if(D3D.Device) { D3D.Device->Release(); D3D.Device = nullptr; }
         // Release the factory.
@@ -200,6 +240,15 @@ namespace R2D
         // Debug check
         Assert(SUCCEEDED(result), "There was a problem opening the command list for recording draw commands.");
 
+        // Setup the initial GPU state.
+        D3D.Commands->SetGraphicsRootSignature(D3D.Root);
+        D3D.Commands->SetComputeRootSignature(D3D.Root);
+        D3D.Commands->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+        Int4 zeroes = Int4(0, 0, 0, 0);
+        // Initialize the root constants to zero (for now).
+        D3D.Commands->SetGraphicsRoot32BitConstants(0, 4, &zeroes, 0);
+
         D3D12_RESOURCE_BARRIER barrier;
         // SwapChain Present-to-RenderTarget transition.
         barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -221,15 +270,22 @@ namespace R2D
         // Let the GPU know that the previous contents of the render target don't matter.
         D3D.Commands->DiscardResource(Window.D3D.RenderTargets[frame], &discard);
 
+        // Retrieve the render target descriptor.
+        auto rtv = (D3D12_CPU_DESCRIPTOR_HANDLE)Heap.RTVs[Window.D3D.RTVs[frame]];
+
         Float4 color(0.01f, 0.01f, 0.01f, 0.0f);
         // Clear the render target to a default colour.
-        D3D.Commands->ClearRenderTargetView(Heap.RTVs[Window.D3D.RTVs[frame]], color.m, 0, nullptr);
+        D3D.Commands->ClearRenderTargetView(rtv, color.m, 0, nullptr);
 
-        // Transition the textures back to their default state.
-        barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-        barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+        // Bind the backbuffer as a render target.
+        D3D.Commands->OMSetRenderTargets(1, &rtv, FALSE, nullptr);
+
+        // Set the viewport and scissor.
+        D3D12_VIEWPORT viewport = { 0.0f, 0.0f, Float(Window.Size.x), Float(Window.Size.y), 0.0f, 1.0f };
+        D3D12_RECT rect = { 0, 0, Window.Size.x, Window.Size.y };
         // -- //
-        D3D.Commands->ResourceBarrier(1, &barrier);
+        D3D.Commands->RSSetViewports(1, &viewport);
+        D3D.Commands->RSSetScissorRects(1, &rect);
     };
 
     // ----------------------------------------------------------------------------------------
@@ -237,6 +293,21 @@ namespace R2D
     {
         // Helper
         auto time = Time::Manager::Singleton;
+
+        // Compute the index to use for determining frame resources.
+        // Frame resources are determined on an even/odd basis of the current frame being rendered.
+        Int frame = time->Frame & 1;
+
+        D3D12_RESOURCE_BARRIER barrier;
+        // SwapChain Present-to-RenderTarget transition.
+        barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+        barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+        barrier.Transition.pResource = Window.D3D.RenderTargets[frame];
+        barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+        barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+        barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+        // -- //
+        D3D.Commands->ResourceBarrier(1, &barrier);
 
         // Close the command list.
         HRESULT result = D3D.Commands->Close();
@@ -246,10 +317,6 @@ namespace R2D
         ID3D12CommandList* commands[] = { D3D.Commands };
         // Execute the draw commands.
         D3D.Queue->ExecuteCommandLists(1, commands);
-
-        // Compute the index to use for determining frame resources.
-        // Frame resources are determined on an even/odd basis of the current frame being rendered.
-        Int frame = time->Frame & 1;
 
         // Present the frame.
         result = Window.D3D.SwapChain->Present(0, DXGI_PRESENT_ALLOW_TEARING | DXGI_PRESENT_DO_NOT_WAIT);

@@ -14,7 +14,7 @@
 namespace R2D
 {
     // ----------------------------------------------------------------------------------------
-    Void* Memory::Request(Int size)
+    Void* Memory::Request(Long size)
     {
         // Debug check
         Assert(size >= 0, "Attempting to request an invalid amount of memory.");
@@ -31,7 +31,7 @@ namespace R2D
     };
 
     // ----------------------------------------------------------------------------------------
-    Void* Memory::Resize(Void* handle, Int size)
+    Void* Memory::Resize(Void* handle, Long size)
     {
         // Debug check
         Assert(size >= 0, "Attempting to request an invalid amount of memory.");
@@ -50,12 +50,15 @@ namespace R2D
     // ----------------------------------------------------------------------------------------
     Void Memory::Free(Void* handle)
     {
+        // Debug check
+        Warning(handle, "Attempting to free memory from a nullptr.");
+
         // Manually verify if the pointer is null to ensure the no-op case when a nullptr is specified.
         if(handle) { _aligned_free(handle); }
     };
 
     // ----------------------------------------------------------------------------------------
-    Void Memory::Copy(Void* destination, const Void* source, Int size)
+    Void Memory::Copy(Void* destination, const Void* source, Long size)
     {
         // Debug check
         Assert(size >= 0, "Attempting to copy an invalid amount of memory.");
@@ -73,7 +76,7 @@ namespace R2D
     };
 
     // ----------------------------------------------------------------------------------------
-    Void Memory::Move(Void* destination, const Void* source, Int size)
+    Void Memory::Move(Void* destination, const Void* source, Long size)
     {
         // Debug check
         Assert(size >= 0, "Attempting to move an invalid amount of memory.");
@@ -91,7 +94,7 @@ namespace R2D
     };
 
     // ----------------------------------------------------------------------------------------
-    Void Memory::Set(Void* destination, Int value, Int size)
+    Void Memory::Set(Void* destination, Int value, Long size)
     {
         // Debug check
         Assert(size >= 0, "Attempting to move an invalid amount of memory.");
@@ -108,7 +111,7 @@ namespace R2D
     };
 
     // ----------------------------------------------------------------------------------------
-    Void Memory::Zero(Void* destination, Int size)
+    Void Memory::Zero(Void* destination, Long size)
     {
         // Internally just a helper for calling Memory::Set(). Could potentially be more efficient than Set, however.
         Memory::Set(destination, 0, size);
