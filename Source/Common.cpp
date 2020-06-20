@@ -13,6 +13,9 @@
 #include "Graphics.hpp"
 #include "Graphics\Manager.hpp"
 // -- //
+#include "Input.hpp"
+#include "Input\Manager.hpp"
+// -- //
 #include "Common\Windows.hpp"
 
 // --------------------------------------------------------------------------------------------
@@ -24,12 +27,6 @@ namespace R2D
     // ----------------------------------------------------------------------------------------
     Void Initialize()
     {
-        // Allocate the time manager.
-        Time::Manager::Singleton = Memory::Request<Time::Manager>();
-
-        // Allocate the graphics manager.
-        Graphics::Manager::Singleton = Memory::Request<Graphics::Manager>();
-
         // Register the application.
         {
             WNDCLASSEX wc;
@@ -50,6 +47,15 @@ namespace R2D
             // Register the window class.
             RegisterClassExW(&wc);
         }
+
+        // Allocate the time manager.
+        Time::Manager::Singleton = Memory::Request<Time::Manager>();
+
+        // Allocate the graphics manager.
+        Graphics::Manager::Singleton = Memory::Request<Graphics::Manager>();
+
+        // Allocate the input manager.
+        Input::Manager::Singleton = Memory::Request<Input::Manager>();
 
         // Initialize the working directory.
         {
@@ -113,6 +119,14 @@ namespace R2D
     // ----------------------------------------------------------------------------------------
     Void Shutdown()
     {
+        // Release the input manager.
+        if(Input::Manager::Singleton)
+        {
+            Input::Manager::Singleton->Release();
+            Memory::Free(Input::Manager::Singleton);
+            Input::Manager::Singleton = nullptr;
+        }
+
         // Release the graphics manager.
         if(Graphics::Manager::Singleton)
         {
@@ -154,10 +168,18 @@ namespace R2D
                 return S_OK;
             }
 
-            // All other messages are passed to the default message handler.
             default:
             {
-                return DefWindowProcW(hwnd, umessage, wparam, lparam);
+                // Allow the input manager to attempt to parse the message.
+                if(Input::Manager::Singleton->Handler(umessage, wparam, lparam))
+                {
+                    return S_OK;
+                }
+                // All other messages are passed to the default message handler.
+                else
+                {
+                    return DefWindowProcW(hwnd, umessage, wparam, lparam);
+                }
             }
         }
     };

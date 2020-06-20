@@ -12,6 +12,9 @@
 // -- //
 #include "..\Graphics.hpp"
 #include "..\Graphics\Manager.hpp"
+// -- //
+#include "..\Input.hpp"
+#include "..\Input\Manager.hpp"
 
 // --------------------------------------------------------------------------------------------
 namespace R2D
@@ -29,7 +32,7 @@ namespace R2D
         // Constructors
 
         // Default constructor.
-        Application() : User() {};
+        Application() : User() { Initialize(); };
         // Copy constructor.
         Application(const Application& other) = delete;
         // Move constructor.
@@ -51,6 +54,9 @@ namespace R2D
             // Initialize the graphics manager.
             Graphics::Manager::Singleton->Initialize();
 
+            // Initialize the input manager.
+            Input::Manager::Singleton->Initialize();
+
             // Call the user entrypoint.
             User.Create();
         };
@@ -61,6 +67,7 @@ namespace R2D
             // Helpers
             auto time = Time::Manager::Singleton;
             auto graphics = Graphics::Manager::Singleton;
+            auto input = Input::Manager::Singleton;
 
             // Prepare the infinite loop.
             Bool running = true;
@@ -73,6 +80,7 @@ namespace R2D
 
                 // Update procedure.
                 graphics->Begin();
+                input->Update();
                 User.Update();
 
                 // Render procedure.

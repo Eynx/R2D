@@ -126,6 +126,9 @@ exit 0</Command>
     <ClInclude Include="Graphics\Window.hpp" />
     <ClInclude Include="Helper\Application.hpp" />
     <ClInclude Include="Input.hpp" />
+    <ClInclude Include="Input\Keyboard.hpp" />
+    <ClInclude Include="Input\Manager.hpp" />
+    <ClInclude Include="Input\Mouse.hpp" />
     <ClInclude Include="R2D.hpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
@@ -145,6 +148,9 @@ exit 0</Command>
     <ClCompile Include="Graphics\Manager.cpp" />
     <ClCompile Include="Graphics\State.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
+    <ClCompile Include="Input\Keyboard.cpp" />
+    <ClCompile Include="Input\Manager.cpp" />
+    <ClCompile Include="Input\Mouse.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

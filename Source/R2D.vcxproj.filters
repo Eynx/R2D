@@ -67,6 +67,15 @@
     <Filter Include="Common\Memory\Buffer">
       <UniqueIdentifier>{c4e1b524-8c02-4081-8405-b1ccfc27aac3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Input\Keyboard">
+      <UniqueIdentifier>{c794c1a4-e1da-4003-8e95-f308e63ec751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Manager">
+      <UniqueIdentifier>{945e91ef-f30d-4f29-93c6-f92619cf5d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Mouse">
+      <UniqueIdentifier>{bd947022-63fb-4e19-95ed-18a687b370de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="R2D.hpp" />
@@ -133,6 +142,15 @@
     <ClInclude Include="Common\Memory\Buffer.hpp">
       <Filter>Common\Memory\Buffer</Filter>
     </ClInclude>
+    <ClInclude Include="Input\Manager.hpp">
+      <Filter>Input\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Keyboard.hpp">
+      <Filter>Input\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Mouse.hpp">
+      <Filter>Input\Mouse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common.cpp">
@@ -167,6 +185,15 @@
     </ClCompile>
     <ClCompile Include="Common\Memory\Buffer.cpp">
       <Filter>Common\Memory\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\Manager.cpp">
+      <Filter>Input\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\Keyboard.cpp">
+      <Filter>Input\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\Mouse.cpp">
+      <Filter>Input\Mouse</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
