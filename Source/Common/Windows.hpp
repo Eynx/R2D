@@ -25,6 +25,8 @@
 // Deal with Windows.h here later as conflicts arise (they are bound to)
 #undef near // Common name for variables
 #undef far // Common name for variables
+#undef BitScanForward // Naming conflict with R2D::BitScanForward()
+#undef BitScanReverse // Naming conflict with R2D::BitScanReverse()
 
 // String utilities for dealing UTF-16
 #include "..\Common\String.hpp"

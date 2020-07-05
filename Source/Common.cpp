@@ -17,6 +17,8 @@
 #include "Input\Manager.hpp"
 // -- //
 #include "Common\Windows.hpp"
+// -- //
+#include <intrin.h>
 
 // --------------------------------------------------------------------------------------------
 namespace R2D
@@ -194,4 +196,44 @@ namespace R2D
             OutputDebugStringW(pOutputString);
         };
     }
+
+    // ----------------------------------------------------------------------------------------
+    Int BitScanForward(uLong value)
+    {
+        DWORD index = -1;
+        return _BitScanForward64(&index, value) ? Int(index) : -1;
+    };
+
+    // ----------------------------------------------------------------------------------------
+    Int BitScanForward(uInt value)
+    {
+        DWORD index = -1;
+        return _BitScanForward(&index, value) ? Int(index) : -1;
+    };
+
+    // ----------------------------------------------------------------------------------------
+    Int BitScanReverse(uLong value)
+    {
+        DWORD index = -1;
+        return _BitScanReverse64(&index, value) ? Int(index) : -1;
+    };
+
+    // ----------------------------------------------------------------------------------------
+    Int BitScanReverse(uInt value)
+    {
+        DWORD index = -1;
+        return _BitScanReverse(&index, value) ? Int(index) : -1;
+    };
+
+    // ----------------------------------------------------------------------------------------
+    Int POPCNT(uLong value)
+    {
+        return Int(__popcnt64(value));
+    };
+
+    // ----------------------------------------------------------------------------------------
+    Int POPCNT(uInt value)
+    {
+        return Int(__popcnt(value));
+    };
 }

@@ -33,7 +33,7 @@ namespace R2D
     };
 
     // ----------------------------------------------------------------------------------------
-    Void Input::Mouse::SetPosition(const Float2& position)
+    Void Input::Mouse::SetPosition(const Int2& position)
     {
         // Set the position of the hardware cursor.
         SetCursorPos(position.x + Offset.x, position.y + Offset.y);

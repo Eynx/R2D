@@ -6,133 +6,101 @@
 
 // Includes
 #include "..\Common\Set.hpp"
-// -- //
-#include <intrin.h>
 
 // --------------------------------------------------------------------------------------------
 namespace R2D
 {
     // ----------------------------------------------------------------------------------------
-    Int CLZ(uInt value)
-    {
-        // Return number of zeroes until an active bit scanned from the left
-        return __lzcnt(value);
-    };
-
-    // ----------------------------------------------------------------------------------------
-    Int POPCNT(uInt value)
-    {
-        return __popcnt(value);
-    };
-
-    // ----------------------------------------------------------------------------------------
-    Int BitSet::Iterator::Count() const
-    {
-        // Return the number of active bits
-        return Int(__popcnt64(Mask));
-    };
-
-    // ----------------------------------------------------------------------------------------
-    Int BitSet::Iterator::Peek() const
-    {
-        // Return the index of the lowest active bit
-        return Int(63 - __lzcnt64(Mask & -Long(Mask)));
-    };
-
-    // ----------------------------------------------------------------------------------------
-    Int BitSet::Iterator::Next()
-    {
-        // Get the lowest active bit
-        Int index = Peek();
-
-        // If one was found
-        if(index > -1)
-        {
-            // Set the bit to inactive
-            Mask = Mask & ~(uLong(1) << index);
-        }
-
-        // Return the index
-        return index;
-    };
-
-    // ----------------------------------------------------------------------------------------
     Int BitSet::Count() const
     {
-        // Return the number of active bits
-        return Int(__popcnt64(Mask));
+        // Return the number of active bits.
+        return POPCNT(Mask);
     };
 
     // ----------------------------------------------------------------------------------------
     Bool BitSet::Get(Int index) const
     {
-        // Return the state of the bit
-        return (Mask & (uLong(1) << index)) > 0;
+        return (Mask >> index) & 1;
+    };
+
+    // ----------------------------------------------------------------------------------------
+    Void BitSet::Set(Int index, Bool state)
+    {
+        // Disable the bit and then set it to the requested state.
+        Mask ^= ~(1ULL << index);
+        Mask |= uLong(state) << index;
     };
 
     // ----------------------------------------------------------------------------------------
     Void BitSet::Set(Int index)
     {
-        // Return the state of the bit
-        Mask |= (uLong(1) << index);
+        Mask |= uLong(1) << index;
     };
 
     // ----------------------------------------------------------------------------------------
     Void BitSet::Reset(Int index)
     {
-        // Set the bit to inactive
-        Mask &= ~(uLong(1) << index);
+        Mask &= ~(1ULL << index);
     };
 
     // ----------------------------------------------------------------------------------------
     Void BitSet::Reset()
     {
-        // Simply set the mask to zero
+        // Simply set the mask to zero.
         Mask = 0;
     }
 
     // ----------------------------------------------------------------------------------------
     Int BitSet::Query() const
     {
-        // Return the index of the lowest zero bit
-        return Int(63 - __lzcnt64(~Mask & -Long(~Mask)));
+        // Return the index of the lowest zero bit.
+        return BitScanForward(~Mask);
     };
 
     // ----------------------------------------------------------------------------------------
-    Int BitSet::Query(Int count) const
+    Int BitSet::Peek() const
     {
-        // TODO: Finish implementing this.
-        Assert(false, "Finish implmenting BitSet::Query(Int).");
+        // Return the index of the lowest active bit.
+        return BitScanForward(Mask);
+    };
 
-        // Prepare the iterator
-        auto iterator = Iterate();
+    // ----------------------------------------------------------------------------------------
+    Int BitSet::Query(Int index) const
+    {
+        // Invert the mask and disable all of the bits at and below the index and then search for the lowest active bit.
+        return BitScanForward(~Mask & (~1ULL << index));
+    };
 
-        // Reverse the active-inactive bits
-        iterator.Mask = iterator.Mask;
-
-        // Loop through all the inactive bits (which are now the active bits)
-        while(iterator.Count())
-        {
-        }
-
-        // Return the index of the lowest zero bit
-        return Int(63 - __lzcnt64(~Mask & -Long(~Mask)));
+    // ----------------------------------------------------------------------------------------
+    Int BitSet::Peek(Int index) const
+    {
+        // Disable all of the bits at and below the index and search for the lowest active bit.
+        return BitScanForward(Mask & (~1ULL << index));
     };
 
     // ----------------------------------------------------------------------------------------
     Int BitSet::Request()
     {
-        // Get the index of the lowest zero bit
+        // Get the index of the lowest zero bit.
         Int index = Query();
 
-        // If one was found
-        if(index > -1)
-        {
-            // Set the bit to active
-            Mask = Mask | (uLong(1) << index);
-        }
+        // Set the bit to active if one was found.
+        if(index > -1) { Set(index); }
 
-        // Return the index
+        // Return the index.
+        return index;
+    };
+
+    // ----------------------------------------------------------------------------------------
+    Int BitSet::Pop()
+    {
+        // Get the index of the lowest active bit.
+        Int index = Peek();
+
+        // Reset the bit if one was found.
+        if(index > -1) { Reset(index); }
+
+        // Return the index.
         return index;
     };
 }

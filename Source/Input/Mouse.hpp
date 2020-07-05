@@ -11,6 +11,8 @@
 // -- //
 #include "..\Input.hpp"
 
+// TODO: Consider using Float2 instead of Int2 for the mouse position. Would also facilitate using direct mouse input instead of Windows' cursor.
+
 // --------------------------------------------------------------------------------------------
 namespace R2D
 {
@@ -75,7 +77,7 @@ namespace R2D
             Bool Released(Mouse::Button button) const;
 
             // Set the position of the cursor or update its locked position if it is locked.
-            Void SetPosition(const Float2& position);
+            Void SetPosition(const Int2& position);
             // -- //
             Void Show();
             Void Hide();

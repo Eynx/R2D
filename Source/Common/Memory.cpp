@@ -14,34 +14,36 @@
 namespace R2D
 {
     // ----------------------------------------------------------------------------------------
-    Void* Memory::Request(Long size)
+    Void* Memory::Request(Long size, Long alignment)
     {
         // Debug check
         Assert(size >= 0, "Attempting to request an invalid amount of memory.");
+        Warning(size != 0, "Caught a zero-size allocation!");
 
         Void* pointer = nullptr;
         // Only allocate memory if size is larger than zero.
         if(size > 0)
         {
             // Addresses are guaranteed (and assumed) to be 16-byte aligned by default.
-            pointer = _aligned_malloc(size, 16);
+            pointer = _aligned_malloc(size, alignment);
         }
 
         return pointer;
     };
 
     // ----------------------------------------------------------------------------------------
-    Void* Memory::Resize(Void* handle, Long size)
+    Void* Memory::Resize(Void* handle, Long size, Long alignment)
     {
         // Debug check
         Assert(size >= 0, "Attempting to request an invalid amount of memory.");
+        Warning(size != 0, "Caught a zero-size reallocation!");
 
         Void* pointer = handle;
         // Only allocate memory if size is larger than zero.
         if(size > 0)
         {
             // Addresses are guaranteed (and assumed) to be 16-byte aligned by default.
-            pointer = _aligned_realloc(handle, size, 16);
+            pointer = _aligned_realloc(handle, size, alignment);
         }
 
         return pointer;

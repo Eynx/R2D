@@ -51,10 +51,46 @@ namespace R2D
             typedef typename Size<sizeof(Type)>::Type Type;
         };
     }
+
+    // Useful functions
+
+    // Return the index of the lowest active bit in the 64-bit integer.
+    extern Int BitScanForward(uLong value);
+    // Return the index of the lowest active bit in the 64-bit integer.
+    inline Int BitScanForward(Long value) { return BitScanForward(uLong(value)); };
+
+    // Return the index of the lowest active bit in the 32-bit integer.
+    extern Int BitScanForward(uInt value);
+    // Return the index of the lowest active bit in the 32-bit integer.
+    inline Int BitScanForward(Int value) { return BitScanForward(uInt(value)); };
+
+    // -- //
+
+    // Return the index of the highest active bit in the 64-bit integer.
+    extern Int BitScanReverse(uLong value);
+    // Return the index of the highest active bit in the 64-bit integer.
+    inline Int BitScanReverse(Long value) { return BitScanReverse(uLong(value)); };
+
+    // Return the index of the highest active bit in the 32-bit integer.
+    extern Int BitScanReverse(uInt value);
+    // Return the index of the highest active bit in the 32-bit integer.
+    inline Int BitScanReverse(Int value) { return BitScanReverse(uInt(value)); };
+
+    // -- //
+
+    // Return the number of active bits in the 64-bit integer.
+    extern Int POPCNT(uLong value);
+    // Return the number of active bits in the 64-bit integer.
+    inline Int POPCNT(Long value) { return POPCNT(uLong(value)); };
+
+    // Return the number of active bits in the 32-bit integer.
+    extern Int POPCNT(uInt value);
+    // Return the number of active bits in the 32-bit integer.
+    inline Int POPCNT(Int value) { return POPCNT(uInt(value)); };
 }
 
 // Debug-Mode utility that triggers a breakpoint if the asserted expression is false.
-#define Assert(expression, message) if(!(expression)) { __debugbreak(); }
+#define Assert(expression, message) if(!(expression)) { R2D::Debug::Print(L##"ERROR: "##message"\n"); __debugbreak(); }
 
 // Debug-Mode utlity that displays the contained message if the expression is false. Use only if the program state is still valid if the condition triggers.
 #define Warning(expression, message) if(!(expression)) { R2D::Debug::Print(L##"WARNING: "##message"\n"); }
