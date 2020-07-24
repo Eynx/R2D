@@ -76,6 +76,24 @@
     <Filter Include="Input\Mouse">
       <UniqueIdentifier>{bd947022-63fb-4e19-95ed-18a687b370de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource\Manager">
+      <UniqueIdentifier>{6aba617d-12c2-4bf1-b958-94bf0b593d75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Material">
+      <UniqueIdentifier>{cbd29959-1717-40b9-bfaf-ecaf0e4c80de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Array">
+      <UniqueIdentifier>{48327c2f-1f5b-44fb-a482-c220c14a4f77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Map">
+      <UniqueIdentifier>{84a87a98-7985-497c-ada9-c320a7f00742}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader">
+      <UniqueIdentifier>{71bff401-c30b-43d4-9f63-a8f53a0eec03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Loader">
+      <UniqueIdentifier>{09ab615e-ba54-4536-8fbe-7d57ff777de7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="R2D.hpp" />
@@ -151,6 +169,24 @@
     <ClInclude Include="Input\Mouse.hpp">
       <Filter>Input\Mouse</Filter>
     </ClInclude>
+    <ClInclude Include="Resource\Manager.hpp">
+      <Filter>Resource\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Material.hpp">
+      <Filter>Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Array.hpp">
+      <Filter>Common\Array</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Map.hpp">
+      <Filter>Common\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Shader.hpp">
+      <Filter>Resource\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Loader.hpp">
+      <Filter>Resource\Loader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common.cpp">
@@ -194,6 +230,15 @@
     </ClCompile>
     <ClCompile Include="Input\Mouse.cpp">
       <Filter>Input\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Manager.cpp">
+      <Filter>Resource\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Material.cpp">
+      <Filter>Resource\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Loader.cpp">
+      <Filter>Resource\Loader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

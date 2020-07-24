@@ -16,6 +16,9 @@
 #include "Input.hpp"
 #include "Input\Manager.hpp"
 // -- //
+#include "Resource.hpp"
+#include "Resource\Manager.hpp"
+// -- //
 #include "Common\Windows.hpp"
 // -- //
 #include <intrin.h>
@@ -58,6 +61,9 @@ namespace R2D
 
         // Allocate the input manager.
         Input::Manager::Singleton = Memory::Request<Input::Manager>();
+
+        // Allocate the resource manager.
+        Resource::Manager::Singleton = Memory::Request<Resource::Manager>();
 
         // Initialize the working directory.
         {
@@ -121,6 +127,14 @@ namespace R2D
     // ----------------------------------------------------------------------------------------
     Void Shutdown()
     {
+        // Release the resource manager.
+        if(Resource::Manager::Singleton)
+        {
+            Resource::Manager::Singleton->Release();
+            Memory::Free(Resource::Manager::Singleton);
+            Resource::Manager::Singleton = nullptr;
+        }
+
         // Release the input manager.
         if(Input::Manager::Singleton)
         {
@@ -144,6 +158,10 @@ namespace R2D
             Memory::Free(Time::Manager::Singleton);
             Time::Manager::Singleton = nullptr;
         }
+
+        // Release the working directory.
+        Directory::Working->Release();
+        Memory::Free(Directory::Working);
 
         // Unregister the application class.
         UnregisterClassW(L"R3D", GetModuleHandleW(nullptr));

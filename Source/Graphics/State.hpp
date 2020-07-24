@@ -40,38 +40,39 @@ namespace R2D
 
                 // Vertex shader to be bound to this state.
                 Shader VS;
-                // Geometry shader to be bound to this state.
-                Shader GS;
                 // Pixel shader to be bound to this state.
                 Shader PS;
                 // Compute shader to be bound to this state.
                 Shader CS;
                 // Material creation flags.
-                union
+                struct Options
                 {
-                    struct
+                    union
                     {
-                        // Set to true to enable the depth buffer. Otherwise disable depth clipping and writing when disabled.
-                        // Must be set to false if no depth buffer is bound.
-                        // Default is true.
-                        Byte DepthEnable : 1;
-                        // Set to true to enable writing to the depth buffer. Otherwise depth testing will still occur as normal, but the depth buffer will not be updated by this material.
-                        // DEPTH_WRITE must be enabled for the depth buffer if this is set to true.
-                        // Default is true.
-                        Byte DepthWrite : 1;
-                        // Set to true to use a counterclockwise winding mode for the front of a triangle. If set to false, a clockwise winding order will be used to denote the front instead.
-                        // Default is true.
-                        Byte FrontCounterClockwise : 1;
-                        // Set to true to cull pixels on the front of the triangle.
-                        // Default is false.
-                        Byte CullFront : 1;
-                        // Set to true to cull pixels on the back of the triangle.
-                        // Default is true.
-                        Byte CullBack : 1;
+                        struct
+                        {
+                            // Set to true to enable the depth buffer. Disables depth clipping and writing to the depth buffer if set to false.
+                            // Must be set to false if no depth buffer is bound.
+                            // Default is true.
+                            Byte DepthEnable : 1;
+                            // Set to true to enable writing to the depth buffer. If set to false, depth testing/clipping will still occur as normal, but the depth buffer will not be updated by this material.
+                            // DEPTH_WRITE must be enabled for the depth buffer if this is set to true.
+                            // Default is true.
+                            Byte DepthWrite : 1;
+                            // Set to true to use a counter-clockwise winding mode to denote the front of a triangle. If set to false, a clockwise winding order will denote the front of the triangle instead.
+                            // Default is true (counter-clockwise).
+                            Byte FrontCounterClockwise : 1;
+                            // Set to true to cull pixels on the front of the triangle.
+                            // Default is false.
+                            Byte CullFront : 1;
+                            // Set to true to cull pixels on the back of the triangle.
+                            // Default is true.
+                            Byte CullBack : 1;
+                        };
+                        // Helper byte containing the material flags.
+                        Byte Data = 23;
                     };
-                    // Helper byte containing the material flags.
-                    Byte Flags = 23;
-                };
+                } Flags;
             };
 
         public:

@@ -11,9 +11,11 @@
 
 // Common module
 #include "Common.hpp"
+#include "Common\Array.hpp"
 #include "Common\Directory.hpp"
 #include "Common\File.hpp"
 #include "Common\Hash.hpp"
+#include "Common\Map.hpp"
 #include "Common\Memory.hpp"
 #include "Common\Memory\Buffer.hpp"
 #include "Common\Set.hpp"
@@ -38,6 +40,10 @@
 
 // Resource module
 #include "Resource.hpp"
+//#include "Resource\Loader.hpp" // Optional
+#include "Resource\Material.hpp"
+#include "Resource\Shader.hpp"
+#include "Resource\Manager.hpp"
 
 // Scene module
 #include "Scene.hpp"

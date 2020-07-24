@@ -11,6 +11,8 @@
 #include "..\Common\Memory.hpp"
 // TODO: Move the Memory namespace calls to a source file, maybe?
 
+// TODO: Refactor the String class as I think it looks messy. Also rename Reserve to Resize (and add another function that actually Reserves capacity instead of resizing it).
+
 // --------------------------------------------------------------------------------------------
 namespace R2D
 {
@@ -19,9 +21,9 @@ namespace R2D
     public:
         // The memory allocated for the string. Contains the characters and the null-byte at the end of the string.
         Byte* Data;
-        // The length of the string. Guaranteed to be less than Capacity, never equal to or greater than it.
+        // The number of characters in the string (not including the null-byte). Should always be less than Capacity, never equal to it, due to the null-byte at the end.
         Int Length;
-        // The amount of memory allocated for the string. Includes the extra byte at the end of the buffer (for the null-byte).
+        // The amount of memory allocated for the string. Includes the extra byte at the end of the buffer that is the null-byte.
         Int Capacity;
 
     public:

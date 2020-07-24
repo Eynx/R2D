@@ -55,11 +55,11 @@ namespace R2D
                 blendDesc.RenderTarget[7] = defaultBlendDesc;
 
                 // Debug check
-                Assert((description.Flags & 24) != 24, "Both CullFront and CullBack are enabled. There currently isn't support for enabling both culling modes");
+                Assert((description.Flags.Data & 24) != 24, "Both CullFront and CullBack are enabled. There currently isn't support for enabling both culling modes");
 
                 // Describe the rasterizer state
                 rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
-                rasterizerDesc.CullMode = description.CullFront ? D3D12_CULL_MODE_FRONT : D3D12_CULL_MODE_BACK;
+                rasterizerDesc.CullMode = description.Flags.CullFront ? D3D12_CULL_MODE_FRONT : D3D12_CULL_MODE_BACK;
                 rasterizerDesc.FrontCounterClockwise = TRUE;
                 rasterizerDesc.DepthBias = D3D12_DEFAULT_DEPTH_BIAS;
                 rasterizerDesc.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
@@ -71,8 +71,8 @@ namespace R2D
                 rasterizerDesc.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
 
                 // Describe the depth-stencil buffer
-                depthStencilDesc.DepthEnable = description.DepthEnable ? TRUE : FALSE;
-                depthStencilDesc.DepthWriteMask = (description.DepthWrite) ? D3D12_DEPTH_WRITE_MASK_ZERO : D3D12_DEPTH_WRITE_MASK_ALL;
+                depthStencilDesc.DepthEnable = description.Flags.DepthEnable ? TRUE : FALSE;
+                depthStencilDesc.DepthWriteMask = (description.Flags.DepthWrite) ? D3D12_DEPTH_WRITE_MASK_ZERO : D3D12_DEPTH_WRITE_MASK_ALL;
                 depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_GREATER_EQUAL;
                 depthStencilDesc.StencilEnable = FALSE;
                 depthStencilDesc.StencilReadMask = D3D12_DEFAULT_STENCIL_READ_MASK;
@@ -93,8 +93,6 @@ namespace R2D
             psoDesc.pRootSignature = D3D.Root;
             psoDesc.VS.pShaderBytecode = description.VS.Handle;
             psoDesc.VS.BytecodeLength = description.VS.Size;
-            psoDesc.GS.pShaderBytecode = description.GS.Handle;
-            psoDesc.GS.BytecodeLength = description.GS.Size;
             psoDesc.PS.pShaderBytecode = description.PS.Handle;
             psoDesc.PS.BytecodeLength = description.PS.Size;
             psoDesc.BlendState = blendDesc;

@@ -108,9 +108,11 @@ exit 0</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Common.hpp" />
+    <ClInclude Include="Common\Array.hpp" />
     <ClInclude Include="Common\Directory.hpp" />
     <ClInclude Include="Common\File.hpp" />
     <ClInclude Include="Common\Hash.hpp" />
+    <ClInclude Include="Common\Map.hpp" />
     <ClInclude Include="Common\Memory.hpp" />
     <ClInclude Include="Common\Memory\Buffer.hpp" />
     <ClInclude Include="Common\Set.hpp" />
@@ -134,6 +136,10 @@ exit 0</Command>
       </ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Resource.hpp" />
+    <ClInclude Include="Resource\Loader.hpp" />
+    <ClInclude Include="Resource\Manager.hpp" />
+    <ClInclude Include="Resource\Material.hpp" />
+    <ClInclude Include="Resource\Shader.hpp" />
     <ClInclude Include="Scene.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +157,9 @@ exit 0</Command>
     <ClCompile Include="Input\Keyboard.cpp" />
     <ClCompile Include="Input\Manager.cpp" />
     <ClCompile Include="Input\Mouse.cpp" />
+    <ClCompile Include="Resource\Loader.cpp" />
+    <ClCompile Include="Resource\Manager.cpp" />
+    <ClCompile Include="Resource\Material.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

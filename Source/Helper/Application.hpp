@@ -15,6 +15,9 @@
 // -- //
 #include "..\Input.hpp"
 #include "..\Input\Manager.hpp"
+// -- //
+#include "..\Resource.hpp"
+#include "..\Resource\Manager.hpp"
 
 // --------------------------------------------------------------------------------------------
 namespace R2D
@@ -57,6 +60,9 @@ namespace R2D
             // Initialize the input manager.
             Input::Manager::Singleton->Initialize();
 
+            // Initialize the resource manager.
+            Resource::Manager::Singleton->Initialize();
+
             // Call the user entrypoint.
             User.Create();
         };
@@ -65,7 +71,6 @@ namespace R2D
         Void Run()
         {
             // Helpers
-            auto time = Time::Manager::Singleton;
             auto graphics = Graphics::Manager::Singleton;
             auto input = Input::Manager::Singleton;
 
@@ -87,9 +92,6 @@ namespace R2D
                 graphics->Upload();
                 User.Draw();
                 graphics->Present();
-
-                // Move to the next frame.
-                time->Frame++;
 
                 // Sleep for now, to keep the CPU utilization down.
                 R2D::Sleep(16);

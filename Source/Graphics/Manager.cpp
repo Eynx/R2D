@@ -318,7 +318,7 @@ namespace R2D
         // Execute the draw commands.
         D3D.Queue->ExecuteCommandLists(1, commands);
 
-        // Present the frame.
+        // Present the frame. DO_NOT_WAIT is used here as the frame should already be synchronized (and something has gone wrong if it has to block).
         result = Window.D3D.SwapChain->Present(0, DXGI_PRESENT_ALLOW_TEARING | DXGI_PRESENT_DO_NOT_WAIT);
         // Debug check
         Assert(SUCCEEDED(result), "There was a problem presenting the frame.");
@@ -329,5 +329,9 @@ namespace R2D
         // Queue the fence to signal this frame's synchronization event when the frame is complete.
         D3D.Fence->SetEventOnCompletion(time->Frame, D3D.FenceEvent[frame]);
         D3D.Queue->Signal(D3D.Fence, time->Frame);
+
+        // Move to the next frame.
+        time->Frame++;
+        // TODO: Signal the next frame rather than the current frame (as signaling the first frame, frame 0, triggers instantly as the fence is already 0).
     };
 }
